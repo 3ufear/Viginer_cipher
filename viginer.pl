@@ -1,14 +1,27 @@
 use strict;
 use Data::Dumper;
+use POSIX;
+&POSIX::setlocale(&POSIX::LC_CTYPE, 'ru_RU.CP1251');
 
 
-my $text_1 = "xt xafs lwpm ccpji fv bd bsm ccpji fv jpgx qycc cxavp ecxmp egwiyj fpji wflt hlxzp hdmmv zjh mg kft crlvr rcqx jm hveec g iowmv yi tmkjr ivi ovpn kskjr dt jhirjbi l dgvvx teb dhlxi qifebeq dt ahv uwwga eml gixd uds ghdnpfiw ngiv phjq dt xavc lwpe emi gixd qd";
-my $text = 'xtxafslwpmccpjifvbdbsmccpjifvjpgxqycccxavpecxmpegwiyjepjiwflthlxzphdmmvzjhmgkftcrlvrrcqxjmhveecgiowmvyitmkjriviovpnkskjrdtjhirjbildgvvxtebdhlxiqifebeqdtahvuwwgaemlgixdudsghdnpfiwngivphjqdtxavclwpeemigixdqd';
+#my $text_1 = "xt xafs lwpm ccpji fv bd bsm ccpji fv jpgx qycc cxavp ecxmp egwiyj fpji wflt hlxzp hdmmv zjh mg kft crlvr rcqx jm hveec g iowmv yi tmkjr ivi ovpn kskjr dt jhirjbi l dgvvx teb dhlxi qifebeq dt ahv uwwga eml gixd uds ghdnpfiw ngiv phjq dt xavc lwpe emi gixd qd";
+#my $text = 'xtxafslwpmccpjifvbdbsmccpjifvjpgxqycccxavpecxmpegwiyjepjiwflthlxzphdmmvzjhmgkftcrlvrrcqxjmhveecgiowmvyitmkjriviovpnkskjrdtjhirjbildgvvxtebdhlxiqifebeqdtahvuwwgaemlgixdudsghdnpfiwngivphjqdtxavclwpeemigixdqd';
 
-my $text_2="xtxafslwpmccpjifvbdbsmccpjifvjpgxqycccxavpecxmpegwiyjfpjiwflthlxzphdmmvzjhmgkftcrlvrrcqxjmhveecgiowmvyitmkjriviovpnkskjrdtjhirjbildgvvxtebdhlxiqifebeqdtahvuwwgaemlgixdudsghdnpfiwngivphjqdtxavclwpeemigixdqd";
+#my $text_2="xtxafslwpmccpjifvbdbsmccpjifvjpgxqycccxavpecxmpegwiyjfpjiwflthlxzphdmmvzjhmgkftcrlvrrcqxjmhveecgiowmvyitmkjriviovpnkskjrdtjhirjbildgvvxtebdhlxiqifebeqdtahvuwwgaemlgixdudsghdnpfiwngivphjqdtxavclwpeemigixdqd";
+#my $text = 'lnjynpwsyrpaocowdlxdxionlpeyqltssvieeckrjtphtdwtvlmeqkmtltkrhiertsexsdmrzgngowempszptsepotdwtdhehpcyxbzvoqawprpddtehewommodceooydhpfcyneczfecmzctzferehocusltebimueodeovsnrawprpdzbtzapvfcinklznrgiehdympoqdhzsplymidroawfvfdtlxaydxecsayynjmzesarzcelnofecspprzmerearpmoyqfoseppbizdlbeeomofzuynwttssnehpconipdydtsbepspbipslvlzfereducfigiyqmpdtovllobaxaxyseoqdhpmtndwepxgwidrrzmlxcpsxecsrpvirizeslnocenuwkrarzcelnofecspsnnlfniygerepnrvidhhyrvszpjzhyqohecdhzmlchzcnvegelxdxoddoqclhtzndzrtnecawlqsnotsoicpwkcpiydhppflltcldizndgiehzetpeeceoiesoysdduoyzpmpdtovllpxgwidrtpxecwzuwnhlrovymeaysdimve';
+#use utf8;
+my @mas_alph = qw(а б в г д е ж з и к л м н о п р с и у ф х ц ч ш щ ы ь ю я);
+
+#my $text = 'iksafshslhcbhpsmyyawoxzlswkgzrnwryrggjikflpklxiclsptpmjfwvvlttvhdycqmxervfywxcqfitbrdbipdsiwrrnftfivztxzfefmsaedvqrwzbcfpbhlllrzitedgcqyfpivxavdpheecmxbwhwrwswxkudtsxjyeomkfdhhekragcwlujdjikjrpyimycxfpbwclvslvkxgewmcchykvbewxxfshczxirwfspjbdkmmyrwsmkucphlulpnhlxzpeovxerhgxkzdthlxwcpfjncnpgwtxcdtxavggritkfbovdujdjitebivivfliwrnrlrssykftwvirptbxliyvsaazawpymkftwvvygarvxeqtbhgfsvvxvfsarvxdmksmlemlhlxkudvsniqifeywgrcjhlphhezvrwsaazawwjrfslwxagyiwigkcpfwtkrtbhpyyivikvqwopedghgsnirdwplyyazwmigksxhdccr';
+
+my $text = 'бююгчяьдшщунщчяддацхаыптчюшсвебюсгпгюняюгьояеюфхюббацугячщабашцхауюлщжгфььаачщчтвчхм';
+
 my %bigrams;
 
 my %res;
+
+
+
 
 
 #%res = map { exists($res{$planets{$_}}) ?  print("$_") : $planets{$_} => [$_] } keys %planets;
@@ -29,11 +42,6 @@ sub get_bigrams_frequency {
             next;
         }
         $bigram .= $ch;
-        #if ($bigram =~ /.*\s.*/) {
-        #    $bigram =~ /.(.)/;
-        #    $bigram = $1;
-        #    next;
-        #}
         if (exists($bigrams{$bigram})) {
             $bigrams{$bigram}++;
         } else {
