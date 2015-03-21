@@ -1,7 +1,8 @@
 #!/usr/bin/perl
-use POSIX;
-&POSIX::setlocale(&POSIX::LC_CTYPE, 'ru_RU.CP1251');
-#use utf8;
+#use POSIX;
+#&POSIX::setlocale(&POSIX::LC_CTYPE, 'ru_RU.CP1251');
+use utf8;
+use open qw(:std :utf8);
 my @mas = qw(а б в г д е ж з и к л м н о п р с и у ф х ц ч ш щ ы ь ю я);
 
 #sub code_symbol {
@@ -17,10 +18,12 @@ my @mas = qw(а б в г д е ж з и к л м н о п р с и у ф х ц �
 sub code_symbol {
     my $symbol = shift;
     my $code = shift;
-    print  "!!! $symbol !!!";
-    #my $code_s = get_symbol_code($symbol);
-    #my $code_c = get_symbol_code($code);
-    return $mas[(($code + $symbol + 29)%29)];
+    #print  "!!! $symbol !!!";
+    my $code_s = ord($symbol) - ord('а');
+    my $code_c = ord($code) - ord('а');
+    return chr((($code_s + $code_c)%29) + ord('а'));
+    #return $mas[(($code + $symbol + 29)%29)];
+
 }
 
 
@@ -41,14 +44,21 @@ sub get_symbol_code {
 
 #my $str = 'ее находят что то странной провинциальной и жеманной';
 
-my @str = qw(5 5 12 0 20 13 4 28 17 22 17 13 17 13 16 17 15 0 12 12 13 8  );
-my @str_1 = qw(14 15 13 2 8 12 21 8 0 10 26 12 13 8 8 6 5 11 0 12 12 13 8  );
-my @str_2 = qw(8 22 17 13 17 13 1 10 5 4 12 13 8 8 20 18 4 13 8);
-my @str_3 = qw(0 2 14 15 13 22 5 11 13 22 5 12 26 8 20 18 4 13 8);
+#my @str = qw(5 5 12 0 20 13 4 28 17 22 17 13 17 13 16 17 15 0 12 12 13 8  );
+#my @str_1 = qw(14 15 13 2 8 12 21 8 0 10 26 12 13 8 8 6 5 11 0 12 12 13 8  );
+#my @str_2 = qw(8 22 17 13 17 13 1 10 5 4 12 13 8 8 20 18 4 13 8);
+#my @str_3 = qw(0 2 14 15 13 22 5 11 13 22 5 12 26 8 20 18 4 13 8);
+
+my $string = 'аааааааааааааааааааааааа';
+print utf8::is_utf8($string) . "\n";
+my @str = split //,$string;
 print "Input string: @str \n";
 print 'Input code: ' . "\n";
-my @code = qw(14 0 15 13 10 26);
-#homp $code;
+my $cod = <STDIN>;
+#my @code = qw(14 0 15 13 10 26);
+print utf8::is_utf8($cod) . "\n";
+chomp $cod;
+my @code = split //,$cod;
 
 #my @string = split //,$str;
 #my @codes = split //,$code;
@@ -61,53 +71,9 @@ my $i = 0;
 foreach my $el (@str) {
     print code_symbol($el,$code[$i]);
     $i++;
-    print ' ';
        # print ' ';
     if ($i > $#code ) {
         $i = 0;
     }
 
 }
-print "\n";
-foreach my $el (@str_1) {
-        print code_symbol($el,$code[$i]);
-            $i++;
-                print ' ';
-                       # print ' ';
-                           if ($i > $#code ) {
-                                       $i = 0;
-                                           }
-
-}
-print "\n";
-foreach my $el (@str_2) {
-        print code_symbol($el,$code[$i]);
-            $i++;
-                print ' ';
-                       # print ' ';
-                           if ($i > $#code ) {
-                                       $i = 0;
-                                           }
-
-}
-
-print "\n";
-foreach my $el (@str_3) {
-        print code_symbol($el,$code[$i]);
-            $i++;
-                print ' ';
-                       # print ' ';
-                           if ($i > $#code ) {
-                                       $i = 0;
-                                           }
-
-}
-print "\n";
-
-
-
-
-
-
-use Data::Dumper;
-#print get_symbol_code('в');
